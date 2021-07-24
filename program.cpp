@@ -3,7 +3,10 @@
 
 using namespace std;
 
+int* string_to_array(int arr[], string str){
+    
 
+}
 
 
 int main(){
@@ -16,6 +19,7 @@ int main(){
      Get n
     
       */
+     
     string line;
     int person = 1;
     int _n;
@@ -39,7 +43,7 @@ int main(){
         if(line[1] == ':'){
             line.erase(0,2);
             int pref_list[_n];
-
+            string_to_array(pref_list, line);
 
         }
     }
