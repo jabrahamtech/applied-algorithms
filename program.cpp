@@ -4,19 +4,17 @@
 
 using namespace std;
 
-vector<int> string_to_array(string str){
+vector<int> string_to_vector(string str){
     vector<int> split_str;
-    int j = 0, i;
+    int j = 0;
     for (int i = 0; i < str.size(); i++) {
         //cout << str[i] << endl;
         //cout << "test" <<endl;
-    
       if (str[i] == ' ' && j == 0){
-          str = str.substr(i);
           j = i;
       }
 
-      else if (str[i] == ' ') {
+      if (str[i] == ' ' && j != i) {
           //cout << i << endl;
           //cout << str.substr(j,i) << endl;
           int n = stoi(str.substr(j,i));
@@ -24,11 +22,11 @@ vector<int> string_to_array(string str){
           // cout << arr[k] << endl;
           j = i;
       }
-    //   if(i == str.size() - 1){
-    //     int n = stoi(str.substr(j));
-    //     split_str.push_back(n);
-    //     //cout << arr[k] << endl;
-    //   }
+      if(i == str.size() - 1){
+        int n = stoi(str.substr(j));
+        split_str.push_back(n);
+        //cout << arr[k] << endl;
+      }
     }
     return split_str;
 }
@@ -58,15 +56,13 @@ int main(){
     string line;
     int person = 1;
     int _n;
-    vector<vector<int> > single_list;
-    vector<int> n;
+    vector<vector<int> > men_list;
+    vector<vector<int> > women_list;
     while(getline(cin, line)){
         if (line[0] == 'n'){
             line.erase(0,3); 
             //cout << "test" << endl;
-            _n = stoi(line); 
-            n.push_back(_n);
-            single_list.push_back(n);
+            _n = stoi(line);
             break;  
         }
     }
@@ -79,13 +75,31 @@ int main(){
     */   
     vector<int> spl_str;
     while(getline(cin, line)){
-        if(line[0] != '#'){
-            //cout << line << endl;
-            spl_str = string_to_array(line);
-            single_list.push_back(spl_str);
+        if(line[0] != '#' && line[0] != 'n'){
+            int count = 1;
+            if (count % 2 ==0){
+                //cout << line << endl;
+                spl_str = string_to_vector(line);
+                print_vector(spl_str);
+                count++;
+            }
+            else{
+                spl_str = string_to_vector(line);
+                print_vector(spl_str);
+                count++;
+            }
         }
-        print_vector(spl_str);
     }
+
+    vector < vector<int> > S;
+    vector<int> empty_matching {0, 0};
+    for(int i = 1; i < _n; i++){
+        S.push_back(empty_matching);
+        print_vector(empty_matching);
+    }
+
+    
+
     return 0;
 }
 
