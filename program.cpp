@@ -6,25 +6,29 @@ using namespace std;
 
 vector<int> string_to_array(string str){
     vector<int> split_str;
-    int j = 0, i, k = 0;
+    int j = 0, i;
     for (int i = 0; i < str.size(); i++) {
         //cout << str[i] << endl;
         //cout << "test" <<endl;
-      if (str[i] == ' ') {
+    
+      if (str[i] == ' ' && j == 0){
+          str = str.substr(i);
+          j = i;
+      }
+
+      else if (str[i] == ' ') {
           //cout << i << endl;
           //cout << str.substr(j,i) << endl;
           int n = stoi(str.substr(j,i));
           split_str.push_back(n);
           // cout << arr[k] << endl;
           j = i;
-          k +=1;
-          
       }
-      if(i == str.size()-1){
-        int n = stoi(str.substr(j));
-        split_str.push_back(n);
-        //cout << arr[k] << endl;
-      }
+    //   if(i == str.size() - 1){
+    //     int n = stoi(str.substr(j));
+    //     split_str.push_back(n);
+    //     //cout << arr[k] << endl;
+    //   }
     }
     return split_str;
 }
@@ -74,15 +78,14 @@ int main(){
 
     */   
     vector<int> spl_str;
-
     while(getline(cin, line)){
-        if(line[1] == ':'){
-            line.erase(0,3);
+        if(line[0] != '#'){
+            //cout << line << endl;
             spl_str = string_to_array(line);
+            single_list.push_back(spl_str);
         }
-    print_vector(spl_str);
+        print_vector(spl_str);
     }
-
     return 0;
 }
 
