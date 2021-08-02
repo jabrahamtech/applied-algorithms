@@ -32,15 +32,6 @@ vector<int> string_to_vector(string str){
 }
 
 
-void print_vector(const std::vector<int> numbers){
-    for(int x = 0 ; x < numbers.size() ; x++){
-        if(x == numbers.size() - 1){
-            cout << numbers[x] << endl;
-        }else{
-            cout << numbers[x] << ' ';
-        }
-    }
-}
 
 int main(){
 
