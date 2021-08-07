@@ -2,10 +2,10 @@
 #include <string>
 #include <vector>
 #include <stdio.h>
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
-vector<int> string_to_vector(string str);
-void print_vector(vector<int> str);
 
 //int Prim(G, c, V);
 
@@ -20,9 +20,14 @@ int main(){
             _n = stoi(line);
         }
         else if(line[0] != '#' && line[0] != 'n'){
-            //cout<<line[0]<<endl;
-            spl_str = string_to_vector(line);
-            G.push_back(spl_str);  
+            string x, y, w;
+            stringstream ss(line);
+            ss >> x >> y >> w;
+            if (stoi(x) > stoi(y)){
+                continue;
+            }
+            //cout << x << ' ' << y << ' ' << w << endl;
+            
         }
     }
 
@@ -44,37 +49,3 @@ int main(){
 //         S.push_back(u);
 //     }
 // }
-
-
-vector<int> string_to_vector(string str){
-    //cout << str << endl;
-    vector<int> split_str;
-    int j = 0;
-    if(!isdigit(str[str.size()-1])){
-        str.erase(str.end());
-    }
-    for (int i = 0; i < str.size(); i++) {
-        //cout << str[i] << endl;
-        //cout << "test" <<endl;
-
-      if (str[i] == ' ' && j != i) {
-          //cout << i << endl;
-          //cout << str.substr(j,i) << endl;
-          int n = stoi(str.substr(j,i));
-          split_str.push_back(n);
-          // cout << arr[k] << endl;
-          j = i;
-      }
-      else if(i == str.size() - 1){
-        int n = stoi(str.substr(j));
-        split_str.push_back(n);
-        //cout << arr[k] << endl;
-      }
-    }
-    print_vector(split_str);
-    return split_str;
-}
-
-void print_vector(vector<int> str){
-    cout<< str[0] << ' ' << str[1] << ' ' << str[2]<< endl;
-}
