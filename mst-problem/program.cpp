@@ -3,11 +3,18 @@
 #include <vector>
 #include <stdio.h>
 #include <sstream>
+#include <stdio.h>
+#include <queue>
 #include <algorithm>
 
 using namespace std;
 
-//int Prim(G, c, V);
+void kruskal(vector< vector <int> > G, int _n);
+bool sortcol( const vector<int>& v1, const vector<int>& v2 );
+int find_p(int v);
+void union_set(int u, int v);
+void sets(int v);
+vector<int> T, R;
 
 int main(){
     string line;
@@ -27,25 +34,72 @@ int main(){
                 continue;
             }
             //cout << x << ' ' << y << ' ' << w << endl;
-            
+            vector <int> temp; temp.push_back(stoi(x)); temp.push_back(stoi(y)); temp.push_back(stoi(w));
+            G.push_back(temp);
         }
-    }
 
+    }
+    sort(G.begin(), G.end(), sortcol);
+    kruskal(G, _n);
     return 0;
 }
 
-// int Prim(G, c, _n){
-//     int a[_n];
-//     for(int i; i < _n; i++){
-//         a[i] = INFINITY;
-//     }
-//     priority_queue<int> Q;
-//     for(int i; i < _n; i++){
-//         Q.push(i);
-//     }
-//     vector<int> S;
-//     while(Q.size() != 0){
-//         u = Q.pop();
-//         S.push_back(u);
-//     }
-// }
+bool sortcol( const vector<int>& v1, const vector<int>& v2 ) {
+    bool v = v1[2] < v2[2];
+    //cout << v1[2] << ' ' << v2[2] << ' ' << v << endl;
+    return v;
+}
+
+int find_p(int v){
+    //cout << v << endl;
+    if (v == T[v]){
+        return v;
+    }
+    return T[v] = find_p(T[v]);
+}
+
+void union_set(int u, int v){
+    // cout << u << endl;
+    if (u != v){
+        swap(u,v);
+        // cout << u << endl;
+    }
+    T[v] = u;
+    if (R[u] == R[v]){
+        // cout << R[u] << endl;
+        R[u]++;
+    }
+}
+
+void kruskal(vector< vector <int> > G, int _n){
+    
+    // cout << G.size() << endl;
+    int e = 0;
+    //cout << e << endl;
+    T.resize(_n+1);
+    R.resize(_n+1);
+    for (int i = 1; i < _n+1; i++){
+        T[i] = i;
+        R[i] = 0;
+        //cout << T[i] << endl;
+    }
+    //cout << G.size() << endl;
+    int count = 0;
+    int i = 0;
+    while(count != _n - 1){
+        //cout << G[i][0] << endl;
+        int u = find_p(G[i][0]);
+        //cout << u << endl;
+        int v = find_p(G[i][1]);
+        //cout << v << endl;
+        if(u != v){
+            e += G[i][2];
+            //cout << e << endl;
+            union_set(u, v);
+            count += 1;
+        }
+        //cout << i << endl;
+        i += 1;
+    }
+    cout << e << endl;  
+}
